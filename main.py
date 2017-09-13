@@ -1,7 +1,7 @@
 import json, sys
 
 # calculate price for each item in a cart
-def calculateItemPrice(item):
+def calculateItemPrice(item, data_price):
 	# get item options 
 	option = item['options']
 
@@ -28,8 +28,12 @@ def calculateItemPrice(item):
 
 if __name__ == "__main__":
 
-	cart_file = sys.argv[1]
-	price_file = sys.argv[2]
+	if len(sys.argv) != 3:
+		print("usage: python main.py cart-4560.json base-prices.json")
+		exit(1)
+	else:
+		cart_file = sys.argv[1]
+		price_file = sys.argv[2]
 
 	# read cart data and price data
 	with open(cart_file) as data_file:
@@ -40,7 +44,7 @@ if __name__ == "__main__":
 
 	total = 0
 	for cart in data_cart:
-		print(cart)
+		print(calculateItemPrice(cart))
 		total += calculateItemPrice(cart)
 	print(total)
 
